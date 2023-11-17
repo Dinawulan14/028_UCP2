@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.navigationwithdata.SkripsiAppBar
 import com.example.ucp2_pertemuan9.ui.theme.UCP2_pertemuan9Theme
 
 class MainActivity : ComponentActivity() {

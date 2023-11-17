@@ -21,7 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 import com.example.ucp2_pertemuan9.R
 
@@ -33,7 +37,7 @@ enum class PengelolaHalaman {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SkripsiApp(
+fun SkripsiAppBar(
     bisaNavigasiBack: Boolean,
     navigasiUp: () -> Unit,
     modifier: Modifier = Modifier
@@ -55,3 +59,35 @@ fun SkripsiApp(
         }
     )
 }
+
+@Composable
+fun SkripsiApp(
+    viewModel: ContactViewModel = viewModel(),
+    navController: NavHostController = rememberNavController()
+) {
+    Scaffold(
+        topBar = {
+            SkripsiAppBar(
+                bisaNavigasiBack = false,
+                navigasiUp = { /*TODO: implement back navigation*/
+                }
+            )
+        }
+    ) { innerPadding ->
+        val uiState by viewModel.stateUI.collectAsState()
+        NavHost(
+            navController = navController,
+            startDestination = PengelolaHalaman.Home.name,
+            modifier = Modifier.padding(innerPadding)
+        )
+        {
+            composable(route = PengelolaHalaman.Home.name) {
+                HalamanHome(
+                    onNextButtonClicked = {
+                        navController.navigate(PengelolaHalaman.Formulir.name)
+                    })
+            }
+        }
+    }
+}
+
